@@ -18,11 +18,11 @@ public extension String {
      
      - Parameters:
         - message: The message to encrypt
-        - padding: The padding to use for the encryption. Defaults to .PKCS1
+        - padding: The padding to use for the encryption. Defaults to .OAEP
      
      - Returns: A base64 encoded, encrypted `String`
     */
-    func encrypt(_ message: String, padding: SecPadding = .PKCS1) -> String? {
+    func encrypt(_ message: String, padding: SecPadding = .OAEP) -> String? {
         let cleanBase64PublicKey = self
             .replacingOccurrences(of: "-----BEGIN PUBLIC KEY-----", with: "")
             .replacingOccurrences(of: "-----END PUBLIC KEY-----", with: "")
@@ -39,7 +39,7 @@ public extension String {
             kSecReturnPersistentRef : kCFBooleanTrue as CFBoolean
         ] as CFDictionary
         
-        var error: Unmanaged<CFError>? = nil
+        var error: Unmanaged<CFError>?
         
         guard let secKey = SecKeyCreateWithData(data as CFData, attributes, &error) else {
             print(error.debugDescription)
@@ -57,11 +57,11 @@ public extension String {
      
      - Parameters:
         - base64PublicKey: The Public key in base64 format
-        - padding: The padding to use for the encryption. Defaults to .PKCS1
+        - padding: The padding to use for the encryption. Defaults to .OAEP
      
      - Returns: A base64 encoded, encrypted `String`
     */
-    func encrypt(with base64PublicKey: String, padding: SecPadding = .PKCS1) -> String? {
+    func encrypt(with base64PublicKey: String, padding: SecPadding = .OAEP) -> String? {
         return base64PublicKey.encrypt(self, padding: padding)
     }
 }

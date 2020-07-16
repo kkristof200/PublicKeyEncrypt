@@ -18,7 +18,7 @@ public extension SecKey {
      
      - Parameters:
         - message: The message to encrypt
-        - padding: The padding to use for the encryption. Defaults to .PKCS1
+        - padding: The padding to use for the encryption
      
      - Returns: An encrypted `Data`
     */
